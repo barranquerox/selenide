@@ -2,9 +2,12 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
 import com.codeborne.selenide.Configuration;
+import java.util.Date;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pageobjects.HomePage;
 
 public class ReactReduxTests {
 
@@ -16,35 +19,51 @@ public class ReactReduxTests {
 
   @Test
   public void signIn() {
-    $(By.cssSelector("[href='#login']")).click();
-    $(By.cssSelector("[type='email']")).setValue("luiscarlosgarelli+test@gmail.com");
-    $(By.cssSelector("[type='password']")).setValue("toto");
-    $(By.cssSelector("[type='submit']")).click();
-    $(By.cssSelector(".user-pic")).shouldBe(visible);
+    final String email = "luiscarlosgarelli+test@gmail.com";
+    final String password = "toto";
+    HomePage homePage = new HomePage();
+
+    homePage.openLoginPage()
+        .login(email, password)
+        .userImage()
+        .shouldBe(visible);
   }
 
   @Test
   public void addNewPost() {
-    $(By.cssSelector("[href='#login']")).click();
-    $(By.cssSelector("[type='email']")).setValue("luiscarlosgarelli+test@gmail.com");
-    $(By.cssSelector("[type='password']")).setValue("toto");
-    $(By.cssSelector("[type='submit']")).click();
-    $(By.cssSelector("[href='#editor']")).click();
-    $$(By.cssSelector("input.form-control")).get(0).setValue("Test Title");
-    $$(By.cssSelector("input.form-control")).get(1).setValue("This article is about Ledger");
-    $$(By.cssSelector("input.form-control")).get(2).setValue("selenide ledger luis");
-    $(By.cssSelector("textarea.form-control")).setValue("Test Description Article bla bla bla");
-    $(By.cssSelector(".btn-primary")).click();
+    final String email = "luiscarlosgarelli+test@gmail.com";
+    final String password = "toto";
+    final String articleTitle = "Title test";
+    final String articleWhatItsAbout = "It is about Ledger";
+    final String articleMarkdown = "Markdown description";
+    final String articleTags = "Tag1 Tag2";
+    HomePage homePage = new HomePage();
+
+    homePage.openLoginPage()
+        .login(email, password)
+        .createPost()
+        .enterTitle(articleTitle)
+        .enterArticleInMarkdown(articleMarkdown)
+        .enterWhatItsAbout(articleWhatItsAbout)
+        .enterTags(articleTags)
+        .saveArticle()
+        .userImage()
+        .shouldBe(visible);
+    // The article is not saved, so I don't know what assertion to do, need to discuss with PO or solve bug
   }
 
   @Test
   public void addToFavorites() {
-    $(By.cssSelector("[href='#login']")).click();
-    $(By.cssSelector("[type='email']")).setValue("luiscarlosgarelli+test@gmail.com");
-    $(By.cssSelector("[type='password']")).setValue("toto");
-    $(By.cssSelector("[type='submit']")).click();
-    $(By.cssSelector(".nav-pills li+li")).click();
-    $(By.cssSelector(".btn-sm")).click();
+    final String email = "luiscarlosgarelli+test@gmail.com";
+    final String password = "toto";
+    HomePage homePage = new HomePage();
+
+    homePage.openLoginPage()
+        .login(email, password)
+        .openGlobalFeed()
+        .setArticleAsFavorite(0)
+        .setArticleAsFavorite(1);
+    // The favorite is not really saved, I don't know what assertion to do, need to discuss with PO or solve bug
   }
 
 }
