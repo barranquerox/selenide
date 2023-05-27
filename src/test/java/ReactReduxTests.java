@@ -1,10 +1,8 @@
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.open;
 
+import api.ApiUtils;
 import com.codeborne.selenide.Configuration;
-import java.util.Date;
-import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageobjects.HomePage;
@@ -37,11 +35,11 @@ public class ReactReduxTests {
     final String articleWhatItsAbout = "It is about Ledger";
     final String articleMarkdown = "Markdown description";
     final String articleTags = "Tag1 Tag2";
+
+    ApiUtils.loginWithAPI(email, password);
     HomePage homePage = new HomePage();
 
-    homePage.openLoginPage()
-        .login(email, password)
-        .createPost()
+    homePage.createPost()
         .enterTitle(articleTitle)
         .enterArticleInMarkdown(articleMarkdown)
         .enterWhatItsAbout(articleWhatItsAbout)
@@ -56,14 +54,13 @@ public class ReactReduxTests {
   public void addToFavorites() {
     final String email = "luiscarlosgarelli+test@gmail.com";
     final String password = "toto";
+
+    ApiUtils.loginWithAPI(email, password);
     HomePage homePage = new HomePage();
 
-    homePage.openLoginPage()
-        .login(email, password)
-        .openGlobalFeed()
+    homePage.openGlobalFeed()
         .setArticleAsFavorite(0)
         .setArticleAsFavorite(1);
     // The favorite is not really saved, I don't know what assertion to do, need to discuss with PO or solve bug
   }
-
 }
