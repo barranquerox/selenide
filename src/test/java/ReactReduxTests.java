@@ -3,6 +3,9 @@ import static com.codeborne.selenide.Selenide.open;
 
 import api.ApiUtils;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
+import org.openqa.selenium.html5.LocalStorage;
+import org.openqa.selenium.html5.WebStorage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageobjects.HomePage;
@@ -18,6 +21,11 @@ public class ReactReduxTests {
     // comment next line to run in your own chrome and see the browser
     Configuration.headless = true;
     open("https://react-redux.realworld.io");
+
+    // Clear local storage, sometimes the token is not cleared and the test fails
+    LocalStorage local = ((WebStorage) WebDriverRunner.getWebDriver()).getLocalStorage();
+    local.clear();
+    WebDriverRunner.getWebDriver().navigate().refresh();
   }
 
   @Test
