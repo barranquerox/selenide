@@ -6,18 +6,21 @@ import static com.codeborne.selenide.Selenide.$$;
 import org.openqa.selenium.By;
 
 public class NewArticlePage {
+
+  By textBoxSelector = By.cssSelector("input.form-control");
+
   public NewArticlePage enterTitle(String title) {
-    $$(By.cssSelector("input.form-control")).get(0).setValue(title);
+    $$(textBoxSelector).get(0).setValue(title);
     return this;
   }
 
   public NewArticlePage enterWhatItsAbout(String whatItsAbout) {
-    $$(By.cssSelector("input.form-control")).get(1).setValue(whatItsAbout);
+    $$(textBoxSelector).get(1).setValue(whatItsAbout);
     return this;
   }
 
   public NewArticlePage enterTags(String tags) {
-    $$(By.cssSelector("input.form-control")).get(2).setValue(tags);
+    $$(textBoxSelector).get(2).setValue(tags);
     return this;
   }
 

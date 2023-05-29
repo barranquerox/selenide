@@ -13,12 +13,15 @@ import org.openqa.selenium.html5.WebStorage;
 
 public class ApiUtils {
 
+  ApiUtils() {
+  }
+
   public static final MediaType JSON = MediaType.get("application/json");
 
-  final static OkHttpClient client = new OkHttpClient();
-  final static String baseURL = "https://api.realworld.io/api/users/";
+  static final OkHttpClient client = new OkHttpClient();
+  static final String BASE_URL = "https://api.realworld.io/api/users/";
 
-  static public void loginWithAPI(String email, String password) {
+  public static void loginWithAPI(String email, String password) {
 
     // Create a JSON object for the user's credentials
     String userJsonString = String.format("{\"user\":{\"email\":\"%s\",\"password\":\"%s\"}}", email, password);
@@ -28,7 +31,7 @@ public class ApiUtils {
 
     // Create an HTTP request object for the login API
     Request request = new Request.Builder()
-        .url(baseURL + "login")
+        .url(BASE_URL + "login")
         .post(body)
         .build();
 
@@ -46,7 +49,7 @@ public class ApiUtils {
       WebDriverRunner.getWebDriver().navigate().refresh();
 
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      // do nothing
     }
   }
 
