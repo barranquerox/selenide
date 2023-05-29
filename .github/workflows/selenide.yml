@@ -8,12 +8,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Set up JDK 20
+        uses: actions/setup-java@v3
+        with:
+          java-version: '20'
+          distribution: 'temurin'
+          cache: maven
 
-      - name: Run Maven tests with Selenide
-        run: |
-          docker run --name selenium -d -p 4444:4444 selenium/standalone-chrome:latest
-          mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver
-        env:
-          SE_OPTS: "-host localhost -port 4444"
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+
+      - name: Build with Maven
+        run: mvn clean test
