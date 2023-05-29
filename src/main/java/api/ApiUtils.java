@@ -1,6 +1,5 @@
 package api;
 
-
 import com.codeborne.selenide.WebDriverRunner;
 import java.io.IOException;
 import okhttp3.MediaType;

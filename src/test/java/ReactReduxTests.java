@@ -13,7 +13,9 @@ public class ReactReduxTests {
   public void setup() {
     // comment next line to run in your own chrome
     //Configuration.remote = "http://localhost:4444/wd/hub";
+    Configuration.browser = "chrome";
     Configuration.browserSize = "1920x1080";
+    // comment next line to run in your own chrome and see the browser
     Configuration.headless = true;
     open("https://react-redux.realworld.io");
   }
