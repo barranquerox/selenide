@@ -12,13 +12,6 @@ public class HomePage {
     return new LoginPage();
   }
 
-  public HomePage login(String email, String password) {
-    $(By.cssSelector("[placeholder='Email']")).setValue(email);
-    $(By.cssSelector("[placeholder='Password']")).setValue(password);
-    $(By.cssSelector("button")).click();
-    return this;
-  }
-
   public SelenideElement userImage() {
     return $(By.cssSelector(".user-pic"));
   }
